@@ -2,6 +2,8 @@
 
 import { useRef, useEffect, useState, useCallback } from 'react'
 import { useGameEngine } from '@/game/useGameEngine'
+import TouchControls from './TouchControls'
+import { inputState } from '@/game/entities'
 
 interface GameCanvasProps {
   bacteriaType: string
@@ -13,6 +15,21 @@ export default function GameCanvas({ bacteriaType, onReturnToStart }: GameCanvas
   const [score, setScore] = useState(0)
   const [health, setHealth] = useState(100)
   const [gameOver, setGameOver] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
+  
+  // Check if device is mobile/tablet on component mount
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 1024 || 'ontouchstart' in window)
+    }
+    
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    
+    return () => {
+      window.removeEventListener('resize', checkMobile)
+    }
+  }, [])
   
   // Use refs to track the latest state without causing re-renders
   const scoreRef = useRef(0)
@@ -68,6 +85,14 @@ export default function GameCanvas({ bacteriaType, onReturnToStart }: GameCanvas
     startGame()
   }, [startGame])
   
+  // Handle touch controls input
+  const handleDirectionChange = useCallback((directions: { up: boolean; down: boolean; left: boolean; right: boolean }) => {
+    inputState.up = directions.up
+    inputState.down = directions.down
+    inputState.left = directions.left
+    inputState.right = directions.right
+  }, [])
+  
   return (
     <div className="relative w-full max-w-6xl">
       {gameOver && (
@@ -111,6 +136,8 @@ export default function GameCanvas({ bacteriaType, onReturnToStart }: GameCanvas
         ref={canvasRef} 
         className="w-full h-[80vh] bg-blood-red rounded-lg"
       />
+      
+      {isMobile && !gameOver && <TouchControls onDirectionChange={handleDirectionChange} />}
     </div>
   )
 } 

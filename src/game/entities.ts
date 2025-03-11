@@ -1,7 +1,7 @@
 import { Entity, Player, Nutrient, ImmuneCell, RedBloodCell } from './types'
 
 // Input state for player control
-const inputState = {
+export const inputState = {
   up: false,
   down: false,
   left: false,
