@@ -18,6 +18,11 @@ export default function Home() {
     }
   }
 
+  const returnToStart = () => {
+    setGameStarted(false)
+    setSelectedBacteria(null)
+  }
+
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-4">
       {!gameStarted ? (
@@ -45,7 +50,10 @@ export default function Home() {
           </button>
         </div>
       ) : (
-        <GameCanvas bacteriaType={selectedBacteria!} />
+        <GameCanvas 
+          bacteriaType={selectedBacteria!} 
+          onReturnToStart={returnToStart}
+        />
       )}
     </main>
   )

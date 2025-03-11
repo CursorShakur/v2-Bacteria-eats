@@ -5,9 +5,10 @@ import { useGameEngine } from '@/game/useGameEngine'
 
 interface GameCanvasProps {
   bacteriaType: string
+  onReturnToStart?: () => void
 }
 
-export default function GameCanvas({ bacteriaType }: GameCanvasProps) {
+export default function GameCanvas({ bacteriaType, onReturnToStart }: GameCanvasProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [score, setScore] = useState(0)
   const [health, setHealth] = useState(100)
@@ -74,12 +75,20 @@ export default function GameCanvas({ bacteriaType }: GameCanvasProps) {
           <div className="text-center p-8 bg-gray-900 rounded-lg">
             <h2 className="text-3xl font-bold mb-4">Game Over</h2>
             <p className="text-xl mb-6">Your score: {score}</p>
-            <button 
-              onClick={handleRestart}
-              className="px-6 py-3 bg-green-600 hover:bg-green-700 rounded-full font-bold"
-            >
-              Play Again
-            </button>
+            <div className="flex flex-col space-y-3">
+              <button 
+                onClick={handleRestart}
+                className="px-6 py-3 bg-green-600 hover:bg-green-700 rounded-full font-bold"
+              >
+                Play Again
+              </button>
+              <button 
+                onClick={onReturnToStart}
+                className="px-6 py-3 bg-blue-600 hover:bg-blue-700 rounded-full font-bold"
+              >
+                Return to Start
+              </button>
+            </div>
           </div>
         </div>
       )}
