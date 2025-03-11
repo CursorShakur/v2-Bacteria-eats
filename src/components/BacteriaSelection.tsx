@@ -55,7 +55,7 @@ export default function BacteriaSelection({ onSelect, selected }: BacteriaSelect
   }
 
   return (
-    <div className="grid grid-cols-1 gap-3 sm:gap-6 px-2">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-6 px-2">
       {bacteriaOptions.map((bacteria) => (
         <div
           key={bacteria.id}
@@ -66,8 +66,8 @@ export default function BacteriaSelection({ onSelect, selected }: BacteriaSelect
           }`}
           onClick={() => onSelect(bacteria.id)}
         >
-          <div className="flex items-center">
-            <div className="relative w-20 h-20 sm:w-32 sm:h-32 flex-shrink-0">
+          <div className="flex md:flex-col items-center">
+            <div className="relative w-20 h-20 sm:w-24 sm:h-24 md:w-32 md:h-32 flex-shrink-0">
               <Image
                 src={bacteria.imageSrc}
                 alt={bacteria.name}
@@ -75,7 +75,7 @@ export default function BacteriaSelection({ onSelect, selected }: BacteriaSelect
                 style={{ objectFit: 'contain' }}
               />
             </div>
-            <div className="ml-4 text-left flex-grow">
+            <div className="ml-4 md:ml-0 md:mt-4 text-left md:text-center flex-grow">
               <h3 className="text-lg sm:text-xl font-bold mb-1 sm:mb-2">{bacteria.name}</h3>
               <p className="text-gray-300 text-sm sm:text-base">{bacteria.description}</p>
             </div>
