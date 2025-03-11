@@ -80,14 +80,32 @@ function drawBackground(ctx: CanvasRenderingContext2D, width: number, height: nu
   ctx.fillStyle = '#8B0000' // Dark red
   ctx.fillRect(0, 0, width, height)
   
-  // Draw some blood vessel texture
+  // Draw blood vessel texture with directional flow
   ctx.save()
   ctx.globalAlpha = 0.1
   
+  // Add directional streaks to simulate blood flow (right to left)
+  for (let i = 0; i < 15; i++) {
+    const y = Math.random() * height
+    const length = 100 + Math.random() * 200
+    const thickness = 10 + Math.random() * 20
+    
+    // Create a gradient that fades out in the direction of flow
+    const gradient = ctx.createLinearGradient(width, y, width - length, y)
+    gradient.addColorStop(0, '#FF0000')
+    gradient.addColorStop(1, 'transparent')
+    
+    ctx.fillStyle = gradient
+    ctx.beginPath()
+    ctx.ellipse(width - length/2, y, length/2, thickness/2, 0, 0, Math.PI * 2)
+    ctx.fill()
+  }
+  
+  // Add some circular variations for texture
   for (let i = 0; i < 5; i++) {
     const x = Math.random() * width
     const y = Math.random() * height
-    const radius = 50 + Math.random() * 100
+    const radius = 30 + Math.random() * 60
     
     const gradient = ctx.createRadialGradient(x, y, 0, x, y, radius)
     gradient.addColorStop(0, '#FF0000')

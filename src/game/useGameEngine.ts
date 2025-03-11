@@ -153,7 +153,7 @@ export function useGameEngine({
     gameState.entities.immuneCells = []
     
     // Create background red blood cells
-    gameState.entities.redBloodCells = Array.from({ length: 20 }, () => createRedBloodCell())
+    gameState.entities.redBloodCells = Array.from({ length: 40 }, () => createRedBloodCell())
     
     // Only start a new game loop if one isn't already running
     if (!isGameLoopRunningRef.current) {

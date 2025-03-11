@@ -70,6 +70,20 @@ const getRandomVelocity = (speed: number) => {
   }
 }
 
+// Helper function to get velocity in a consistent direction (for blood flow)
+const getBloodFlowVelocity = (speed: number) => {
+  // Base direction is right-to-left (180 degrees or π radians)
+  const baseAngle = Math.PI;
+  // Allow some variation (±30 degrees or ±π/6 radians)
+  const variation = (Math.random() * Math.PI / 3) - (Math.PI / 6);
+  const angle = baseAngle + variation;
+  
+  return {
+    x: Math.cos(angle) * speed,
+    y: Math.sin(angle) * speed,
+  }
+}
+
 // Factory function to create game entities
 export function createGameEntities(canvasWidth: number, canvasHeight: number) {
   // Create player based on bacteria type
@@ -315,7 +329,7 @@ export function createGameEntities(canvasWidth: number, canvasHeight: number) {
   const createRedBloodCell = (): RedBloodCell => {
     const size = 60 + Math.random() * 20
     const position = getRandomPosition(canvasWidth, canvasHeight)
-    const velocity = getRandomVelocity(30)
+    const velocity = getBloodFlowVelocity(30)
     
     return {
       type: 'redBloodCell',
