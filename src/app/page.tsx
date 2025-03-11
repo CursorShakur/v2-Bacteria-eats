@@ -48,6 +48,10 @@ export default function Home() {
           >
             Start Game
           </button>
+
+          <p className="mt-4 text-xs sm:text-sm text-gray-400">
+            Images created with BioRender.com
+          </p>
         </div>
       ) : (
         <GameCanvas 
